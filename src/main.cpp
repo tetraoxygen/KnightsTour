@@ -21,7 +21,7 @@ struct Board {
 	int array [BOARD_WIDTH][BOARD_HEIGHT] = {{0}};
 };
 
-int solveKnightsTour(Board board, int row, int col, int currentMoveNum = 1, int solutions = 0); 
+int solveKnightsTour(Board board, int row, int col, int currentMoveNum = 1); 
 
 
 int main() {
@@ -29,8 +29,7 @@ int main() {
 	std::cout << solveKnightsTour(board, 2, 2) << " solutions found" << std::endl;
 }
 
-void printBoard(Board board, int solution = 0) {
-	std::cout << "Solution " << solution << ":" << std::endl;
+void printBoard(Board board) {
 	for (int col = 0; col < BOARD_HEIGHT; col++) {
 		for (int row = 0; row < BOARD_WIDTH; row++) {
 			std::cout << std::setfill('0') << std::setw(2) << board.array[row][col] << " ";
@@ -40,10 +39,11 @@ void printBoard(Board board, int solution = 0) {
 	std::cout << std::endl;
 }
 
-int solveKnightsTour(Board board, int row, int col, int currentMoveNum, int solutions) {
+int solveKnightsTour(Board board, int row, int col, int currentMoveNum) {
 	const int startCol = col;
 	const int startRow = row;
 	bool shortHorizontal = false;
+	int solutions = 0;
 	
 	board.array[row][col] = currentMoveNum;
 	if (currentMoveNum != BOARD_HEIGHT * BOARD_WIDTH) {
@@ -94,13 +94,13 @@ int solveKnightsTour(Board board, int row, int col, int currentMoveNum, int solu
 					col >= 0 			&&
 					board.array[row][col] == 0
 				) {
-					solutions = solveKnightsTour(board, row, col, currentMoveNum + 1, solutions);
+					solutions = solutions + solveKnightsTour(board, row, col, currentMoveNum + 1);
 				}
 			}
 		}
 	} else {
-		solutions++;
-		printBoard(board, solutions);
+		printBoard(board);
+		solutions = 1;
 	}
 	
 	return solutions;
