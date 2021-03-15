@@ -1,8 +1,22 @@
+/** --------------------------- 
+* @file		main.cpp
+* @author	Charlie Welsh
+* @version	1.0
+*
+* CS162-01 - Assignment 5.1
+*	The Knight's Tour assignment
+*
+* --------------------------- */
+
 #include <iostream>
 #include <iomanip>
 
-const int BOARD_WIDTH = 5;
-const int BOARD_HEIGHT = 5;
+const int BOARD_SIZE = 5;
+
+struct Board {
+	int array [BOARD_SIZE][BOARD_SIZE] = {{0}};
+};
+
 
 /**
 *	Recursively solves the knights tour using brute force
@@ -17,27 +31,35 @@ const int BOARD_HEIGHT = 5;
 *
 */
 
-struct Board {
-	int array [BOARD_WIDTH][BOARD_HEIGHT] = {{0}};
-};
-
 int solveKnightsTour(Board board, int row, int col, int currentMoveNum = 1); 
 
+/**
+*	Prints the contents of a Board object. 
+*	
+*	@param board -				the board we’re working with (contains all moves-to-date)
+*
+*/
+
+void printBoard(Board board);
 
 int main() {
 	Board board;
 	std::cout << solveKnightsTour(board, 2, 2) << " solutions found" << std::endl;
 }
 
+// -------------------
+
 void printBoard(Board board) {
-	for (int col = 0; col < BOARD_HEIGHT; col++) {
-		for (int row = 0; row < BOARD_WIDTH; row++) {
+	for (int col = 0; col < BOARD_SIZE; col++) {
+		for (int row = 0; row < BOARD_SIZE; row++) {
 			std::cout << std::setfill('0') << std::setw(2) << board.array[row][col] << " ";
 		}
 		std::cout << '\n';
 	}
 	std::cout << std::endl;
 }
+
+// -------------------
 
 int solveKnightsTour(Board board, int row, int col, int currentMoveNum) {
 	const int startCol = col;
@@ -46,7 +68,7 @@ int solveKnightsTour(Board board, int row, int col, int currentMoveNum) {
 	int solutions = 0;
 	
 	board.array[row][col] = currentMoveNum;
-	if (currentMoveNum != BOARD_HEIGHT * BOARD_WIDTH) {
+	if (currentMoveNum != BOARD_SIZE * BOARD_SIZE) {
 		for (int rotation = 0; rotation < 4; rotation++) {
 			switch(rotation) {
 				case 0:
@@ -88,9 +110,9 @@ int solveKnightsTour(Board board, int row, int col, int currentMoveNum) {
 					}
 				}
 				if (
-					row < BOARD_WIDTH 	&&
+					row < BOARD_SIZE 	&&
 					row >= 0 			&&
-					col < BOARD_HEIGHT	&&
+					col < BOARD_SIZE	&&
 					col >= 0 			&&
 					board.array[row][col] == 0
 				) {
