@@ -50,7 +50,7 @@ int main() {
 
 // -------------------
 
-void printBoard(Board board, int solution = 0) {
+void printBoard(Board board, int solution) {
 	std::cout << "Solution " << solution << ":" << std::endl;
 	for (int col = 0; col < BOARD_SIZE; col++) {
 		for (int row = 0; row < BOARD_SIZE; row++) {
